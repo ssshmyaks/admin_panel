@@ -4,10 +4,10 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 
+admin_id = '825627855'
 rt = Router()
 db = sq.connect(r'C:\Users\super\Projects\adminpanel\database.db')
 cur = db.cursor()
-admin_id = '825627855'
 
 
 @rt.message(Command("admin"))

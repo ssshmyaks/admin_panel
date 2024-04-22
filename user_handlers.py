@@ -4,9 +4,9 @@ from aiogram.types import Message
 import sqlite3 as sq
 from datetime import datetime
 
+rt = Router()
 db = sq.connect(r'C:\Users\super\Projects\adminpanel\database.db')
 cur = db.cursor()
-rt = Router()
 
 
 @rt.message(Command("start"))

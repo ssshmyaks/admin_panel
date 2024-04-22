@@ -34,7 +34,7 @@ async def clear_id():
                 ],
                 [
                     InlineKeyboardButton(
-                        text="Назад",
+                        text="Назад ↩",
                         callback_data="back"
                     )
                 ]

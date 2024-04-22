@@ -8,8 +8,8 @@ from aiogram.fsm.state import State, StatesGroup
 
 rt = Router()
 bot = Bot(token=config.BOT_TOKEN)
-db = sq.connect(r'C:\Users\super\Projects\adminpanel\database.db')
 cur = db.cursor()
+db = sq.connect(r'C:\Users\super\Projects\adminpanel\database.db')
 
 
 class tg(StatesGroup):
