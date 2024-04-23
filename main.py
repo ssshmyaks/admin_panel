@@ -3,7 +3,6 @@ import logging
 import config
 import admin_handlers
 import user_handlers
-import distribute
 from aiogram import Bot, Dispatcher
 
 bot = Bot(token=config.BOT_TOKEN)
@@ -13,7 +12,7 @@ if config.LOGGING:
     logging.basicConfig(format='[+] %(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
-dp.include_routers(admin_handlers.rt, user_handlers.rt, distribute.rt)
+dp.include_routers(admin_handlers.rt, user_handlers.rt)
 
 
 async def main():
