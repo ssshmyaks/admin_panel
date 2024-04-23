@@ -9,6 +9,7 @@ Telegram bot admin panel
 
 config.py
 
+
 BOT_TOKEN = 'your bot token' from @BotFather
 
 password = 'your password' сreate a password
