@@ -29,10 +29,8 @@ cur.execute('''
     tg INTEGER
     )''')
 
-
-with sq.connect('database.db'):
-    cur.execute("INSERT INTO admin (tg) VALUES (?)", (config.admin,))
-    db.commit()
+cur.execute("INSERT INTO admin (tg) VALUES (?)", (config.admin,))
+db.commit()
 
 
 def create_table(user_id: int, referral: str):
