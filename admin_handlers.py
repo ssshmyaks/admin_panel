@@ -9,7 +9,6 @@ from aiogram.types import callback_query, Message
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 
-admin_id = '825627855'
 rt = Router()
 bot = Bot(token=config.BOT_TOKEN)
 db = sq.connect('database.db')
