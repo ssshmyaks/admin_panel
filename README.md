@@ -2,6 +2,8 @@ Telegram bot admin panel
 
 /start - write in database
 
+/ref - get referral link
+
 /admin - admin panel
 
 
