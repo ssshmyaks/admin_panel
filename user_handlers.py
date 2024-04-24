@@ -1,6 +1,6 @@
 import sqlite3 as sq
 import config
-from create_db import create_table
+from create_db import create_table, add_referral
 from aiogram import Router, Bot
 from aiogram.methods import GetChat
 from aiogram.filters import Command
@@ -34,24 +34,31 @@ async def start(message: Message, bot: Bot):
 		await message.answer('Привет!')
 		try:
 			creator_ref = message.text.split()[1]
+			await create_table(creator_ref)
 		except Exception as e:
 			print(e)
-		user = await bot(GetChat(chat_id=user_id))
-		username = user.username
+		refuser = await bot(GetChat(chat_id=user_id))
+		username = refuser.username
 		with sq.connect('database.db'):
+			table = 'a' + str(creator_ref)
+			cur.execute(f"SELECT referral FROM {table}")
+			result = cur.fetchall()
+			for row in result:
+				referral = row[0]
+
 			cur.execute("SELECT * FROM user WHERE tg = ?", (user_id,))
 			user_exists = cur.fetchone() is not None
 			if not user_exists:
 				cur.execute("INSERT INTO user (tg) VALUES (?)", (user_id,))
 				db.commit()
-		try:
+
 			if int(user_id) == int(creator_ref):
 				await message.answer("Извините, но вы не можете быть своим рефералом!")
+			if str(user_id) == str(referral):
+				pass
 			else:
 				await bot.send_message(creator_ref, f"Пользователь @{username} присоединился к боту по вашей ссылке.")
-				await create_table(user_id, username)
-		except Exception as e:
-			print(e)
+				await add_referral(user_id, creator_ref)
 
 
 @rt.message(Command("ref"))
