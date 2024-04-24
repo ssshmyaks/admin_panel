@@ -29,8 +29,8 @@ cur.execute('''
     tg INTEGER
     )''')
 
-cur.execute("INSERT INTO admin (tg) VALUES (?)", (config.admin,))
-db.commit()
+# cur.execute("INSERT INTO admin (tg) VALUES (?)", (config.admin,))
+# db.commit()
 
 
 async def create_table(creator_ref: int):

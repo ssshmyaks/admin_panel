@@ -37,6 +37,11 @@ async def start(message: Message, bot: Bot):
 			await create_table(creator_ref)
 		except Exception as e:
 			print(e)
+		cur.execute("SELECT * FROM user WHERE tg = ?", (user_id,))
+		user_exists = cur.fetchone() is not None
+		if not user_exists:
+			cur.execute("INSERT INTO user (tg) VALUES (?)", (user_id,))
+			db.commit()
 		refuser = await bot(GetChat(chat_id=user_id))
 		username = refuser.username
 		with sq.connect('database.db'):
@@ -45,12 +50,6 @@ async def start(message: Message, bot: Bot):
 			result = cur.fetchall()
 			for row in result:
 				referral = row[0]
-
-			cur.execute("SELECT * FROM user WHERE tg = ?", (user_id,))
-			user_exists = cur.fetchone() is not None
-			if not user_exists:
-				cur.execute("INSERT INTO user (tg) VALUES (?)", (user_id,))
-				db.commit()
 
 			if int(user_id) == int(creator_ref):
 				await message.answer("Извините, но вы не можете быть своим рефералом!")
