@@ -116,6 +116,19 @@ async def users():
     )
 
 
+async def answer():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="Ответить ▫",
+                    callback_data="answ"
+                )
+            ]
+        ]
+    )
+
+
 async def back():
     return InlineKeyboardMarkup(
         inline_keyboard=[

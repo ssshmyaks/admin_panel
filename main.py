@@ -2,6 +2,7 @@ import asyncio
 import logging
 import config
 import admin_handlers
+import support_handlers
 import user_handlers
 from aiogram import Bot, Dispatcher
 
@@ -12,7 +13,7 @@ if config.LOGGING:
     logging.basicConfig(format='[+] %(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
-dp.include_routers(admin_handlers.rt, user_handlers.rt)
+dp.include_routers(admin_handlers.rt, support_handlers.rt, user_handlers.rt)
 
 
 async def main():
