@@ -6,13 +6,19 @@ Telegram bot admin panel
 
 /admin - admin panel
 
+/support - send message to support chat
+
 
 
 config.py
 
 
-BOT_TOKEN = 'your bot token' from @BotFather
+BOT_TOKEN = from @BotFather
 
-password = 'your password' сreate a password
+password = сreate a password
 
-admin = 'your user id' admin id
+admin = admin id
+
+support_chat = support chat id
+
+support_chat_link = support chat link
