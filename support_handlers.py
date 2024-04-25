@@ -32,7 +32,8 @@ async def question(message: Message, state: FSMContext, bot: Bot):
 		who = "@" + message.chat.username
 	request = await state.get_data()
 	await message.reply("🕒 | Ожидайте ответа от тех.поддержки.")
-	await bot.send_message(config.support_chat, f'✉ | Новый вопрос\nОт: {who}\nВопрос: `{request['quest']}`\n\n📝 Чтобы ответить на вопрос введите `/answer {message.chat.id}`', parse_mode='Markdown')
+	await bot.send_message(config.support_chat, f'✉ | Новый вопрос\nОт: {who}\nВопрос: {request['quest']}')
+	await bot.send_message(config.support_chat, f'📝 Чтобы ответить на вопрос введите `/answer {message.chat.id}`', parse_mode='Markdown')
 
 
 @rt.message(Command("answer"))
@@ -47,5 +48,5 @@ async def answer(message: Message, bot: Bot):
 	else:
 		await message.reply('⚠ | Укажите аргументы команды')
 		return
-	await bot.send_message(chatid, f'*Ответ от поддержки:*\n{answr}', parse_mode='Markdown')
+	await bot.send_message(chatid, f'*Ответ от поддержки:*\n{answr}', parse_mode='HTML')
 	await message.answer('Отправлено ✅')

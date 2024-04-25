@@ -13,19 +13,18 @@ bot = Bot(token=config.BOT_TOKEN)
 db = sq.connect('database.db')
 cur = db.cursor()
 
+admin = req.get_admin()
+
 
 @rt.message(Command("admin"))
 async def admin_panel(message: Message, state: FSMContext):
     if message.chat.type == 'private':
         user_id = message.from_user.id
-        with sq.connect('database.db'):
-            cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-            user_exists = cur.fetchone() is not None
-            if not user_exists:
-                await message.answer('Нет прав ❌')
-            else:
-                await message.answer("✅ | Вы вошли в админ панель", reply_markup=await admin_keyboards.admin_keyboard())
-                await state.set_state(state=None)
+        if str(user_id) in str(admin):
+            await message.answer("✅ | Вы вошли в админ панель", reply_markup=await admin_keyboards.admin_keyboard())
+            await state.set_state(state=None)
+        else:
+            await message.answer('Нет прав ❌')
     else:
         pass
 
@@ -33,10 +32,7 @@ async def admin_panel(message: Message, state: FSMContext):
 @rt.callback_query(F.data == 'back')
 async def admin_panel(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await call.message.edit_text("✅ | Вы вошли в админ панель", reply_markup=await admin_keyboards.admin_keyboard())
@@ -46,10 +42,7 @@ async def admin_panel(call: CallbackQuery, state: FSMContext):
 @rt.callback_query(F.data == 'admins')
 async def admin_panel(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await call.message.edit_text("✅ | Вы вошли в админ панель", reply_markup=await admin_keyboards.admins())
@@ -59,10 +52,7 @@ async def admin_panel(call: CallbackQuery, state: FSMContext):
 @rt.callback_query(F.data == 'support')
 async def admin_panel(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await call.message.edit_text("✅ | Вы вошли в админ панель", reply_markup=await admin_keyboards.support())
@@ -72,10 +62,7 @@ async def admin_panel(call: CallbackQuery, state: FSMContext):
 @rt.callback_query(F.data == 'users')
 async def admin_panel(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await call.message.edit_text("✅ | Вы вошли в админ панель", reply_markup=await admin_keyboards.users())
@@ -98,10 +85,7 @@ async def admin_check(call: CallbackQuery, state: FSMContext):
 @rt.callback_query(F.data == 'add_admin')
 async def admin_pass(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await state.set_state(req.admin_add.password)
@@ -135,10 +119,7 @@ async def admin_addd(message: Message, state: FSMContext, bot: Bot):
 @rt.callback_query(F.data == 'del_admin')
 async def admin_pass(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await state.set_state(req.admin_del.password)
@@ -172,10 +153,7 @@ async def admin_dell(message: Message, state: FSMContext):
 @rt.callback_query(F.data == 'add_support')
 async def support_id(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await state.set_state(req.support_add.us)
@@ -197,10 +175,7 @@ async def support_addd(message: Message, state: FSMContext):
 @rt.callback_query(F.data == 'del_support')
 async def support_id(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await state.set_state(req.support_del.us)
@@ -223,10 +198,7 @@ async def support_dell(message: Message, state: FSMContext):
 @rt.callback_query(F.data == 'distribute')
 async def distribute(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await state.set_state(req.dist.dist_text)
@@ -251,14 +223,11 @@ async def distribute_send(message: Message, state: FSMContext):
 @rt.callback_query(F.data == 'ban')
 async def ban_user(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
+        await call.message.answer('Нет прав ❌')
+    else:
         await state.set_state(req.ban.us)
         await call.message.edit_text('🚧 | Отправьте id человека, которого хотите заблокировать', reply_markup=await admin_keyboards.back())
-    else:
-        await call.message.answer('Нет прав ❌')
 
 
 @rt.message(req.ban.us)
@@ -274,10 +243,7 @@ async def ban_user_s(message: Message, state: FSMContext):
 @rt.callback_query(F.data == 'unban')
 async def unban_user(call: CallbackQuery, state: FSMContext):
     user_id = call.message.chat.id
-    with sq.connect('database.db'):
-        cur.execute("SELECT * FROM admin WHERE tg = ?", (user_id,))
-        user_exists = cur.fetchone() is not None
-    if not user_exists:
+    if str(user_id) not in str(admin):
         await call.message.answer('Нет прав ❌')
     else:
         await state.set_state(req.unban.us)

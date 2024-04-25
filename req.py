@@ -47,5 +47,14 @@ def get_banned():
     return id_list
 
 
+def get_admin():
+    cur.execute("SELECT tg FROM admin")
+    result = cur.fetchall()
+
+    id_list = [row[0] for row in result]
+
+    return id_list
+
+
 def extract_arg(arg):
     return arg.split()[1:]
