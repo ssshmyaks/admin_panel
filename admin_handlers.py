@@ -169,6 +169,10 @@ async def support_addd(message: Message, state: FSMContext):
         db.commit()
     await message.answer("✅ | Поддержка добавлена", reply_markup=await admin_keyboards.admin_keyboard())
     await bot.send_message(p['us'], f'✅ | Доступен чат поддержки\n{config.support_chat_link}')
+    try:
+        await message.bot.unban_chat_member(chat_id=config.support_chat, user_id=p['us'])
+    except:
+        pass
     await state.set_state(state=None)
 
 
