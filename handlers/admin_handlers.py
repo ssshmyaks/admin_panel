@@ -1,5 +1,5 @@
 import sqlite3 as sq
-import admin_keyboards
+from keyboards import admin_keyboards
 import config
 import asyncio
 import req

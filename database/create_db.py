@@ -1,7 +1,6 @@
-import config
 import sqlite3 as sq
 
-db = sq.connect(r'C:\Users\super\Projects\adminpanel\database.db')
+db = sq.connect(r'/home/ssshmyaks/PycharmProjects/admin_panel/database/database.db')
 cur = db.cursor()
 
 

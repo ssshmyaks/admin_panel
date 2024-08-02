@@ -1,7 +1,7 @@
 import sqlite3 as sq
 import config
 import req
-from create_db import create_table, add_referral
+from database.create_db import create_table, add_referral
 from aiogram import Router, Bot
 from aiogram.methods import GetChat
 from aiogram.filters import Command
