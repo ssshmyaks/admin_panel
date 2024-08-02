@@ -1,8 +1,7 @@
 import sqlite3 as sq
-from keyboards import admin_keyboards
-import config
+from src.keyboards import admin_keyboards
 import asyncio
-import req
+from src import req, config
 from aiogram import Router, F, Bot
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message

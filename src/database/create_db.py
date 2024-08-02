@@ -1,6 +1,6 @@
 import sqlite3 as sq
 
-db = sq.connect(r'/home/ssshmyaks/PycharmProjects/admin_panel/database/database.db')
+db = sq.connect(r'/src/database/database.db')
 cur = db.cursor()
 
 

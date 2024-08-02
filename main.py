@@ -1,7 +1,7 @@
 import asyncio
 import logging
-import config
-from handlers import support_handlers, user_handlers, admin_handlers
+from src import config
+from src.handlers import support_handlers, user_handlers, admin_handlers
 from aiogram import Bot, Dispatcher
 
 bot = Bot(token=config.BOT_TOKEN)
